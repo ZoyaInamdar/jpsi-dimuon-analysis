@@ -1,6 +1,15 @@
+#virtual environment
 .venv/
+#python
 _pycache_/
-.ipynb_checkpoints/
+*.pyc
+#macos
 .DS_Store
-
+#jupyter
+.ipynb_checkpoints/
+#root data
 data/*.root
+data/*.zip
+#generated outputs
+plots/*.png
+plots/*.pdf
