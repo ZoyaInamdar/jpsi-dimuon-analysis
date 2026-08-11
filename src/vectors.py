@@ -34,10 +34,16 @@ class LorentzVector:
     def p(self):
         """Magnitude of 3-momentum."""
         return np.sqrt(self.px**2+self.py**2+self.pz**2)
-   
+    
+    @property
+    def pt(self):
+        """Transverse momentum"""
+        return np.sqrt(self.px**2 + self.py**2)
+
     @property 
     def eta(self):
-        return np.sqrt(self.px**2+self.py**2)
+        """pseudorapidity"""
+        return 0.5*np.log((self.p+self.pz)/(self.p-self.pz))
     
     @property
     def phi(self):

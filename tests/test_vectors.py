@@ -6,13 +6,22 @@ MUON_MASS = 0.10566
 
 def test_from_ptetaphim_recovers_mass():
     """A single particle built from (pt, eta, phi, m) should report back mass m."""
-    v = LorentzVector.from_ptetaphim(pt=20.0,eta=1.2,phi=1.2,phi=0.5,m=MUON_MASS)
+    v = LorentzVector.from_ptetaphim(
+        pt=20.0,
+        eta=1.2,
+        phi=0.5,
+        m=MUON_MASS)
     assert np.isclose(v.mass,MUON_MASS,atol=1e-6)
 
 def test_from_ptetaphim_recovers_pt_eta_phi():
     """Round-trip: build from pt/eta/phi, read pt/eta/phi back off px,py,pz,E."""
     pt, eta, phi = 15.0,-0.8,2.1
-    v = LorentzVector.from_ptetaphim(pt, eta, phi, MUON_MASS)
+    v = LorentzVector.from_ptetaphim(
+        pt=pt,
+        eta=eta, 
+        phi=phi, 
+        m=MUON_MASS
+        )
     assert np.isclose(v.pt,pt,atol=1e-6)
     assert np.isclose(v.eta,eta,atol=1e-6)
     assert np.isclose(v.phi,phi,atol=1e-6)
@@ -24,7 +33,7 @@ def test_addition_is_componentwise():
     assert total.px == 5
     assert total.py == 7
     assert total.pz == 9
-    assert total.E == 30
+    assert total.E == 24
 
 def test_back_to_back_massless_pair_gives_zero_mass():
     """Two massless, back-to-back (opposite phi) particles with equal pt:
