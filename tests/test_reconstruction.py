@@ -1,5 +1,12 @@
 import numpy as np
-from src.reconstruction import build_muon_vectors, reconstruct_dimuon
+import pandas as pd
+from src.reconstruction import (
+    build_muon_vectors, 
+    reconstruct_dimuon,
+    calculate_dimuon_mass,
+    calculate_dimuon_masses,
+    reconstruct_selected_events,
+)
 
 def test_build_muon_vectors():
     row = {
@@ -66,3 +73,45 @@ def test_reconstruct_dimuon_mass():
     )
 
     assert np.isclose(dimuon.mass, expected_mass)
+
+def test_calculate_dimuon_mass():
+    row = {
+        "Pt1":5.0,
+        "Eta1":0.3,
+        "Phi1":0.1,
+        "Pt2": 4.2,
+        "Eta2": -0.2,
+        "Phi2": 2.9,
+    }
+
+    dimuon = reconstruct_dimuon(row)
+    mass = calculate_dimuon_mass(row)
+    assert np.isclose(mass, dimuon.mass)
+
+def test_calculate_dimuon_masses():
+    df = pd.DataFrame({
+        "Pt1": [5.0, 6.0],
+        "Eta1": [0.3, 0.1],
+        "Phi1": [0.1, 0.5],
+        "Pt2": [4.2, 3.5],
+        "Eta2": [-0.2, -0.4],
+        "Phi2": [2.9, 2.5],
+    })
+
+    masses = calculate_dimuon_masses(df)
+    assert len(masses) == 2
+    assert np.all(masses > 0)
+
+def test_reconstruct_selected_events():
+    df = pd.DataFrame({
+        "Pt1": [5.0, 6.0],
+        "Eta1": [0.3, 0.1],
+        "Phi1": [0.1, 0.5],
+        "Pt2": [4.2, 3.5],
+        "Eta2": [-0.2, -0.4],
+        "Phi2": [2.9, 2.5],
+    })
+
+    masses = reconstruct_selected_events(df)
+    assert len(masses) == 2
+    assert np.all(masses > 0)

@@ -80,4 +80,4 @@ def test_rejects_muons_outside_eta_acceptance():
 
     selected = select_opposite_sign_global_muons(df)
 
-    assert len(selected) == 0
+    assert len(selected) == 0 

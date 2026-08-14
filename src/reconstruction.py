@@ -26,3 +26,19 @@ def reconstruct_dimuon(row):
     mu1, mu2 = build_muon_vectors(row)
 
     return mu1 + mu2
+
+def calculate_dimuon_mass(row):
+    """calculating invariant mass of 2 muon system"""
+
+    dimuon = reconstruct_dimuon(row)
+    return dimuon.mass
+
+def calculate_dimuon_masses(df):
+    """calculate dimuon invariant mass for every event"""
+    return df.apply(calculate_dimuon_mass, axis=1)
+
+def reconstruct_selected_events(df):
+    """calculating dimuon masses for already selected events"""
+    masses = calculate_dimuon_masses(df)
+    return masses
+
