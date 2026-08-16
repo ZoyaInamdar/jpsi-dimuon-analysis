@@ -40,3 +40,29 @@ def select_opposite_sign_global_muons(df):
     )
 
     return df[mask]
+
+def find_muon_pairs(events):
+    """finding opp sign global muon pairs passing kinematic cuts"""
+    pairs = []
+
+    for event_index,event in enumerate(events):
+        pt=event["Muon_pt"]
+        eta=event["Muon_eta"]
+        charge=event["Muon_charge"]
+        is_global=event["Muon_isGlobal"]
+
+        n_muons=len(pt)
+
+        for i in range(n_muons):
+            for j in range(i+1, n_muons):
+                if charge[i]*charge[j]>=0:
+                    continue
+                if not is_global[i] or not is_global[j]:
+                    continue
+                if pt[i]<=3.0 or pt[j]<=3.0:
+                    continue
+                if abs(eta[i])>=2.4 or abs(eta[j])>=2.4:
+                    continue
+                pairs.append((event_index,i,j))
+
+    return pairs

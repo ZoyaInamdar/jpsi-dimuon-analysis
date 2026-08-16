@@ -42,3 +42,23 @@ def reconstruct_selected_events(df):
     masses = calculate_dimuon_masses(df)
     return masses
 
+def reconstruct_cms_dimuon(event, pair):
+    """reconstructinh dimuon 4 vector from CMS event and selected muon pair"""
+
+    _,i,j=pair
+
+    mu1 = LorentzVector.from_ptetaphim(
+        pt=event["Muon_pt"][i],
+        eta=event["Muon_eta"][i],
+        phi=event["Muon_phi"][i],
+        m=event["Muon_mass"][i],
+    )
+
+    mu2 = LorentzVector.from_ptetaphim(
+        pt=event["Muon_pt"][j],
+        eta=event["Muon_eta"][j],
+        phi=event["Muon_phi"][j],
+        m=event["Muon_mass"][j],
+    )
+
+    return mu1+mu2
