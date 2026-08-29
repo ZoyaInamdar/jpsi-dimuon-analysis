@@ -12,4 +12,4 @@ data/*.root
 data/*.zip
 #generated outputs
 plots/*.png
-plots/*.pdf
+plots/*.pdfplots.dimuon_mass.png
